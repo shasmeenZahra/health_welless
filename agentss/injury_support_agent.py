@@ -4,9 +4,12 @@ from dotenv import load_dotenv
 import os
 import sys
 import streamlit as st
-# for importing from the guardrails path because Python doesn’t automatically look in folders above the script unless you tell it to.
-sys.path.append(os.path.abspath(".."))  
-from guardrails import input_injury_guardrail, output_injury_guardrail, InjuryOutput
+
+# Add parent directory to import local guardrails module
+sys.path.append(os.path.abspath(".."))
+
+# ✅ FIXED: Corrected import names
+from guardrails import validate_injury_input, validate_injury_output, InjuryData
 
 load_dotenv()
 
@@ -31,13 +34,14 @@ config = RunConfig(
     tracing_disabled=True
 )
 
+# ✅ FIXED: Correct function and output_type
 injury_support_agent: Agent = Agent(
     name="Injury support agent", 
     instructions="""You are an Injury Support Agent. Provide helpful, accurate, and empathetic advice to users seeking support for injuries. Always ensure your responses are safe, informative, and within your scope as an AI assistant. If a question is outside your expertise, advise the user to consult a healthcare professional.""",
     model=model,
-    input_guardrails=[input_injury_guardrail],
-    output_type=InjuryOutput,
-    output_guardrails=[output_injury_guardrail]
-    )
+    input_guardrails=[validate_injury_input],
+    output_type=InjuryData,
+    output_guardrails=[validate_injury_output]
+)
 
 print("Injury Support Agent Loaded")

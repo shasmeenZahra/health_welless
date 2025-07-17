@@ -7,9 +7,13 @@ from agents import (
 )
 import os
 import sys
-sys.path.append(os.path.abspath("..")) 
+sys.path.append(os.path.abspath(".."))
+
 from context import UserSessionContext
-from guardrails import input_goal_guardrail_agent, output_goal_guardrail_agent
+
+# ✅ FIXED: Correct guardrail function names
+from guardrails import validate_weight_goal_input, validate_weight_goal_output
+
 from agents.run import RunConfig
 from dotenv import load_dotenv
 from pydantic import BaseModel
@@ -46,8 +50,9 @@ async def analyze_goal(context: RunContextWrapper[UserSessionContext], goal_text
     Parses the goal and applies guardrails manually.
     """
 
+    # ✅ FIXED: Use correct input guardrail
     input_check = await Runner.run(
-        input_goal_guardrail_agent,
+        validate_weight_goal_input,
         goal_text,
         context=context.context,
         run_config=config
@@ -74,8 +79,9 @@ async def analyze_goal(context: RunContextWrapper[UserSessionContext], goal_text
         "duration": duration
     }
 
+    # ✅ FIXED: Use correct output guardrail
     output_check = await Runner.run(
-        output_goal_guardrail_agent,
+        validate_weight_goal_output,
         f"{action} {quantity} {metric} in {duration}",
         context=context.context,
         run_config=config
