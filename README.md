@@ -26,20 +26,35 @@ An intelligent health assistant powered by **Gemini API** and **OpenAI Agents SD
 
 health-and-wellness-planner-agent/
 ├── main.py                      # Streamlit entry point
+
 ├── agent.py                     # Main health agent and handoff logic
+
 ├── config.py                    # API key & model setup
+
 ├── context.py                   # User session context class
+
 ├── guardrails.py                # Input/output validation logic
+
 ├── hooks.py                     # Hooks (e.g. startup logic)
+
 ├── tools/
+
 │   ├── goal\_analyzer.py         # Goal parsing logic
+
 │   ├── meal\_planner.py          # Meal planner tool
+
 │   ├── progress\_tracker.py      # Tracks progress & updates context
+
 │   ├── workout\_recommender.py   # Suggests personalized workouts
+
 │   └── scheduler.py             # Weekly check-in logic
+
 └── agentss/
+
 ├── injury\_support\_agent.py
+
 ├── nutrition\_expert\_agent.py
+
 └── escalation\_agent.py
 
 ````
